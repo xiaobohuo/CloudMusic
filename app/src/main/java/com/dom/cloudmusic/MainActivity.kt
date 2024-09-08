@@ -8,12 +8,14 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.dom.cloudmusic.ui.theme.CloudMusicTheme
+import com.dom.cloudmusic.core.design.theme.CloudMusicTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,7 +47,11 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
 fun MyButton(name: String, padding: Int) {
     Button(onClick = {
         Log.e("====", "Compose 按钮")
-    }, modifier = Modifier.fillMaxWidth(0.9f)) {
+    }, modifier = Modifier.fillMaxWidth(0.9f),
+        colors = ButtonDefaults.buttonColors(
+            containerColor = MaterialTheme.colorScheme.tertiary
+        )
+    ) {
         Text(text = name)
     }
 }
