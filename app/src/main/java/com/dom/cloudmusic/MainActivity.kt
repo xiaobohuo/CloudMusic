@@ -14,6 +14,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.dom.cloudmusic.core.design.theme.CloudMusicTheme
 
@@ -28,7 +29,7 @@ class MainActivity : ComponentActivity() {
 //                        name = "Android",
 //                        modifier = Modifier.padding(innerPadding)
 //                    )
-                    MyButton("Compose 按钮", 20)
+                    MyButton(R.string.app_name, 20)
                 }
             }
         }
@@ -44,7 +45,7 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun MyButton(name: String, padding: Int) {
+fun MyButton(name: Int, padding: Int) {
     Button(onClick = {
         Log.e("====", "Compose 按钮")
     }, modifier = Modifier.fillMaxWidth(0.9f),
@@ -52,7 +53,7 @@ fun MyButton(name: String, padding: Int) {
             containerColor = MaterialTheme.colorScheme.tertiary
         )
     ) {
-        Text(text = name)
+        Text(text = stringResource(name))
     }
 }
 
