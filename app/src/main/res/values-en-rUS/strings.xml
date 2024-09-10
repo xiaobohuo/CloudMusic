@@ -54,7 +54,7 @@
     <string name="wait_comment">Review</string>
     <string name="complete">Complete</string>
     <string name="refund_sales_service">Refund/After-sales</string>
-    <string name="loading">Loading…</string>
+    <string name="loading">Loading...</string>
     <string name="error_pay_channel">Payment channel error</string>
     <string name="hint_pay_wait">Payment confirmation in progress</string>
     <string name="error_pay_cancel">Payment cancelled</string>
