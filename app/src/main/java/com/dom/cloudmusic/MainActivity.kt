@@ -18,22 +18,20 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.compose.rememberNavController
 import com.dom.cloudmusic.core.design.theme.CloudMusicTheme
-import com.dom.cloudmusic.feature.splash.SplashRoute
+import com.dom.cloudmusic.ui.MyApp
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge(statusBarStyle = SystemBarStyle.dark(Color.TRANSPARENT))
         setContent {
+            val naviController = rememberNavController()
             CloudMusicTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { _ ->
-//                    Greeting(
-//                        name = "Android",
-//                        modifier = Modifier.padding(innerPadding)
-//                    )
-//                    MyButton(R.string.app_name, 20)
-                    SplashRoute()
+                    MyApp(naviController = naviController)
+//                    SplashRoute()
                 }
             }
         }

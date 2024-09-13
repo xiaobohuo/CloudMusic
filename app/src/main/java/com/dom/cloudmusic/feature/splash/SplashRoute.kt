@@ -2,31 +2,45 @@ package com.dom.cloudmusic.feature.splash
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.dom.cloudmusic.R
 import com.dom.cloudmusic.core.design.theme.CloudMusicTheme
 import com.dom.cloudmusic.util.SuperDateUtil
 
 @Composable
-fun SplashRoute() {
+fun SplashRoute(
+    toMain: () -> Unit,
+    viewModel: SplashViewModel = viewModel()
+) {
+    val timeLeft by viewModel.timeLeft.collectAsStateWithLifecycle()
     SplashScreen(
-        year = SuperDateUtil.currentYear()
+        year = SuperDateUtil.currentYear(),
+        timeLeft = timeLeft,
+        toMain = toMain
     )
 }
 
 @Composable
-fun SplashScreen(year: Int = 2024) {
+fun SplashScreen(
+    year: Int = 2024,
+    timeLeft: Long = 0,
+    toMain: () -> Unit = {}
+) {
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -49,6 +63,9 @@ fun SplashScreen(year: Int = 2024) {
             modifier = Modifier
                 .padding(bottom = 70.dp)
                 .align(Alignment.BottomCenter)
+                .clickable {
+                    toMain()
+                }
         )
         //endregion
 
