@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -28,18 +29,24 @@ fun SplashRoute(
     viewModel: SplashViewModel = viewModel()
 ) {
     val timeLeft by viewModel.timeLeft.collectAsStateWithLifecycle()
+    val navigateToMain by viewModel.navigateToMain.collectAsStateWithLifecycle()
     SplashScreen(
         year = SuperDateUtil.currentYear(),
         timeLeft = timeLeft,
-        toMain = toMain
+        onSkipAdClick = viewModel::onSkipAdClick
     )
+    if (navigateToMain) {
+        LaunchedEffect(key1 = true) {
+            toMain()
+        }
+    }
 }
 
 @Composable
 fun SplashScreen(
     year: Int = 2024,
     timeLeft: Long = 0,
-    toMain: () -> Unit = {}
+    onSkipAdClick: () -> Unit = {}
 ) {
     Box(
         modifier = Modifier
@@ -64,7 +71,7 @@ fun SplashScreen(
                 .padding(bottom = 70.dp)
                 .align(Alignment.BottomCenter)
                 .clickable {
-                    toMain()
+                    onSkipAdClick()
                 }
         )
         //endregion
@@ -79,6 +86,13 @@ fun SplashScreen(
                 .padding(bottom = 30.dp)
         )
         //endregion
+        Text(
+            text = "倒计时：$timeLeft",
+            color = MaterialTheme.colorScheme.onPrimary,
+            modifier = Modifier
+                .align(Alignment.TopEnd)
+                .padding(top = 30.dp, end = 20.dp),
+        )
     }
 }
 
