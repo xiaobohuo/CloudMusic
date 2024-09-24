@@ -7,13 +7,18 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import com.dom.cloudmusic.core.design.component.MyNavigationBar
-import com.dom.cloudmusic.feature.discovery.DISCOVERY_ROUTE
 import com.dom.cloudmusic.feature.discovery.DiscoveryRoute
 import com.dom.cloudmusic.feature.feed.FeedRoute
 import com.dom.cloudmusic.feature.me.MeRoute
 import com.dom.cloudmusic.feature.shortvideo.ShortVideoRoute
+import kotlinx.coroutines.launch
 
 @Composable
 fun MainRoute(
@@ -29,9 +34,15 @@ fun MainRoute(
 fun MainScreen(
     finishPage: () -> Unit
 ) {
+    var currentDestination by rememberSaveable {
+        mutableStateOf(TopLevelDestination.DISCOVERY.route)
+    }
+
     val pagerState = rememberPagerState {
         4
     }
+
+    val scope = rememberCoroutineScope()
 
     Column(
         modifier = Modifier.fillMaxSize()
@@ -54,9 +65,12 @@ fun MainScreen(
 
         MyNavigationBar(
             destinations = TopLevelDestination.entries,
-            currentDestination = DISCOVERY_ROUTE,
+            currentDestination = currentDestination,
             onNavigateToDestination = {
-
+                currentDestination = TopLevelDestination.entries[it].route
+                scope.launch {
+                    pagerState.scrollToPage(it)
+                }
             },
             modifier = Modifier,
         )
